@@ -48,6 +48,9 @@ jobs:
         push: true
         tags: levanhai05/kiemthu2:latest
 
+    - name: Log out from Docker Hub
+      uses: docker/logout-action@v2
+
   open-pull-request:
     needs: build
     runs-on: ubuntu-latest
