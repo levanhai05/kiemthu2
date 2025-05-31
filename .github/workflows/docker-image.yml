@@ -26,7 +26,7 @@ jobs:
       working-directory: ./frontend
 
   build:
-    needs: test
+    needs: test  # Chạy job 'test' trước
     runs-on: ubuntu-latest
 
     steps:
@@ -48,22 +48,17 @@ jobs:
         push: true
         tags: levanhai05/kiemthu2:latest
 
-    - name: Log out from Docker Hub
-      uses: docker/logout-action@v2
-
   open-pull-request:
-    needs: build
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: feature/merge-to-master
-        base: master
         title: Merge to master
-        commit-message: "Automated update for merge"
